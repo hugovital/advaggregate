@@ -19,13 +19,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
     
-    
-    <bean id="myRoutes" class="com.testes.MyRoutes" />
+    <bean class="com.testes.MyRoutes"  id="myRoutes"/>
+	<bean class="com.testes.RestRoute" id="restRoutes"/>    
     
     <camelContext id="_camelContext1" xmlns="http://camel.apache.org/schema/spring">
-    
-        <routeBuilder ref="myRoutes" />
-        
+        <routeBuilder ref="myRoutes"/>
+    	<routeBuilder ref="restRoutes"/>        
     </camelContext>
     
 </beans>
