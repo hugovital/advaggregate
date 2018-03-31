@@ -24,11 +24,21 @@ public class Agregacao implements AggregationStrategy, TimeoutAwareAggregationSt
 	@Override
 	public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
 		
-		if (oldExchange == null)
-			return newExchange;
+		if (oldExchange == null){
+			
+			String ret = (String) newExchange.getIn().getHeader("retorno");
+			if (ret != null && ret.equals("servico_02")){
+				newExchange.setProperty(Exchange.AGGREGATION_COMPLETE_CURRENT_GROUP, true);	
+			}
+			
+			return newExchange;		
+		}
 		
+		
+		//controle para saber se houve exceção
+		//importante sempre retornar oldExchange, se existir, pois é o ID dele que fica no banco como chave primária
 		if (newExchange.getIn().getHeader("exception") !=null )
-			oldExchange.getIn().setHeader("exception", "true");
+			oldExchange.getIn().setHeader("exception", "true");			
 
 		return oldExchange;
 	}
